@@ -1,0 +1,40 @@
+# Minimal example config for the sample data under data/Berlin/.
+# Run from the repo root:
+#   python processor.py --config examples/sample_config.yaml
+city: Berlin
+target_epsg: EPSG:32633
+
+inputs:
+  sentinel2: ./data/Berlin/Berlin_S2_2024-10-24_sample.tif
+  hsi: ./data/Berlin/Berlin_hsi_bs.tif
+  lst: ./data/Berlin/Berlin_lst_final.tif
+
+labels:
+  shp: ./data/Berlin/Berlin_labels_sample.shp
+  class_column: Name
+  min_area: 50000
+  remap_dict: {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10, 11: 11, 12: 12, 13: 13, 14: 14, 15: 15, 16: 16, 17: 17}
+  class_order: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+  overlap_threshold: 0.6
+  overlap_threshold_by_class:
+    17: 0.35
+
+sampling:
+  grid_patch_size: 8
+  resolution: 10
+  patch_size: 32
+
+split:
+  block_m: 200.0
+  super_block_m: 600.0
+  split_ratio: [0.6, 0.2, 0.2]
+  min_sb_for_geo: 3
+  seed_search: 20
+  random_seed: 42
+
+toggles:
+  use_lst: true
+  use_pca: false
+
+output:
+  h5_path: ./output/Berlin_sample.h5

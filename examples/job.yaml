@@ -1,0 +1,4 @@
+config:
+  class: File
+  path: sample_config_docker.yaml
+output_h5: output/Berlin_sample.h5
