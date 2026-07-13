@@ -54,20 +54,19 @@ Output H5 fields:
 
 ## Sample data
 
-`data/Berlin/` holds a small (~11 MB) self-contained test bundle: a
-96x96-pixel (99% valid) crop of the Berlin HSI/Sentinel-2/LST -- output of
-`heatwise-hsi-lst-prep`'s own sample data, see that repo's `data/Berlin/` --
-plus `Berlin_labels_sample.shp`, 3 label polygons clipped to fit safely
-inside that crop (so every sampled patch has room for its full 32x32
-footprint). `examples/sample_config.yaml` is a ready-to-use config pointing
-at it. Run from the repo root:
+`data/Berlin/` holds a self-contained test bundle (~57 MB) cropped to the
+HEATWISE Berlin sample boundary (5.4 x 8.1 km): `Berlin_hsi_bs.tif` and
+`Berlin_lst_final.tif` (outputs of `heatwise-hsi-lst-prep` run on its own
+sample data), `Berlin_S2.tif`, and `Berlin_labels.shp` with 17 label
+polygons across 8 LCZ classes. `examples/sample_config.yaml` is a
+ready-to-use config pointing at it. Run from the repo root:
 
 ```bash
 python processor.py --config examples/sample_config.yaml
 ```
 
-This produces `~42` patches across 2 classes with a real geo-isolated
-train/val/test split in well under a minute.
+This produces ~246 patches across 8 classes with a real geo-isolated
+train/val/test split in about a minute.
 
 ## Docker
 
@@ -76,12 +75,12 @@ versioned tag, matching the CWL's `dockerPull`), so local tests exercise the
 exact tag that will later be pushed to the registry:
 
 ```bash
-docker build -t ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.0 .
+docker build -t ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.1 .
 
 docker run --rm \
   -v /path/to/host/output:/app/output \
-  ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.0 \
-  --config examples/sample_config.yaml --output-h5 /app/output/Berlin_sample.h5
+  ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.1 \
+  --config examples/sample_config.yaml --output-h5 /app/output/Berlin_patches.h5
 ```
 
 Base image: `python:3.11-slim` + system `libgdal-dev`/`gdal-bin` (needed for
@@ -122,7 +121,7 @@ This repo is simpler than `heatwise-hsi-lst-prep`'s STAC catalog case (no
 item/asset files that `cwltool` would also need to stage.
 
 > **Rebuild the image before testing this** (`docker build -t
-> ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.0 .`): the Dockerfile's `ENTRYPOINT` was
+> ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.1 .`): the Dockerfile's `ENTRYPOINT` was
 > just fixed too (`processor.py` -> `/app/processor.py`, absolute). An
 > actual `cwltool` run against this repo failed with `can't open file
 > '/<job-tmp>/processor.py'` because `ENTRYPOINT` args are *appended to*

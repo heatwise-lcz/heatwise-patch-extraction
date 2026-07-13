@@ -32,8 +32,8 @@ requirements:
     # Release-shaped image reference. Before publishing, build/tag this
     # image locally with the same name so local cwltool runs exercise the
     # exact tag that will later be pushed to the registry.
-    dockerImageId: ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.0
-    dockerPull: ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.0
+    dockerImageId: ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.1
+    dockerPull: ghcr.io/heatwise-lcz/heatwise-patch-extraction:0.1.1
 
 inputs:
   config:

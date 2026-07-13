@@ -5,12 +5,12 @@ city: Berlin
 target_epsg: EPSG:32633
 
 inputs:
-  sentinel2: ./data/Berlin/Berlin_S2_2024-10-24_sample.tif
+  sentinel2: ./data/Berlin/Berlin_S2.tif
   hsi: ./data/Berlin/Berlin_hsi_bs.tif
   lst: ./data/Berlin/Berlin_lst_final.tif
 
 labels:
-  shp: ./data/Berlin/Berlin_labels_sample.shp
+  shp: ./data/Berlin/Berlin_labels.shp
   class_column: Name
   min_area: 50000
   remap_dict: {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10, 11: 11, 12: 12, 13: 13, 14: 14, 15: 15, 16: 16, 17: 17}
@@ -37,4 +37,4 @@ toggles:
   use_pca: false
 
 output:
-  h5_path: ./output/Berlin_sample.h5
+  h5_path: ./output/Berlin_patches.h5
